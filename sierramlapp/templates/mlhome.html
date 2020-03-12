@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+      <form class="" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+              <legend class="border-bottom mb-4">Predict Price</legend>
+              <div class="form-group col-md-8" style="float:left;">
+                  {{ form.excel.label() }}
+                  {{ form.excel(class="form-control-file") }}
+                  {% if form.excel.errors %}
+                      {% for error in form.excel.errors %}
+                        <span class="text-danger">{{ error }}</span><br>
+                      {% endfor %}
+                  {% endif %}
+              </div>
+              <div class="form-group col-md-4 text-right pt-3" style="float:right;">
+                    {{ form.submit(class="btn btn-outline-info") }}
+              </div>
+          </fieldset>
+
+      </form>
+      {% if form.excel.data %}
+      <div class="card">
+        <div class="card-body">
+        <legend class="border-bottom mb-4">{{ filename }}
+          {% if result_download_link %}
+              <a class="btn btn-outline-primary btn-sm float-right ml-2" href="{{ result_download_link }}"> Download</a>
+          {% endif %}
+              <a class="btn btn-outline-primary btn-sm float-right" href="{{ url_for('mlapp.predict', filename=filename) }}"> Predict Data</a>
+        </legend>
+        <table id="myTable" class="display table responsive" width=100%>
+            <thead>
+                <tr>
+                    {% for col in col_names %}
+                        <td>{{ col }}</td>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+              {% for i in dict %}
+              <tr>
+                {% for x in i %}
+                    <td> {{ i[x] }}</td>
+                {% endfor %}
+              </tr>
+              {% endfor %}
+
+            </tbody>
+        </table>
+      </div>
+    </div>
+      {% endif %}
+     </div>
+{% endblock content %}
+
+{%  block script %}
+<script type="text/javascript">
+  $(document).ready(function(){
+      $('#myTable').DataTable({
+        scrollY:        '50vh',
+        scrollCollapse: true,
+        scrollX: true
+      });
+
+      $('input[type="search"]').addClass("form-group")
+  })
+</script>
+{% endblock %}

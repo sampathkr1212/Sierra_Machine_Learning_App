@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h1>Welcome to Sierra Prediction Tool..</h1>
+        {% if current_user.is_authenticated %}
+            <a class="btn btn-primary m-2" href="{{ url_for('mlapp.mlhome') }}">Lets go for prediction</a>
+        {% endif %}
+
+    </div>
+{% endblock content %}

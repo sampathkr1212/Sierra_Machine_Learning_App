@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block content %}
+      <form class="form-signin card" action="" method="post" style="margin-top: 50px;">
+          {{ form.hidden_tag() }}
+          <fieldset class="form-group card-body" style="padding:0.25rem;">
+              <div class="text-center mb-4">
+                  <img class="mb-2" src="{{ url_for('static', filename='logo.png') }}" alt="" width="72" height="72">
+              </div>
+              <div class="form-group">
+                  {{ form.email.label(class="form-control-label") }}
+                  {% if form.email.errors %}
+                    {{ form.email(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                      {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                  {% else %}
+                    {{ form.email(class="form-control form-control-lg") }}
+                  {% endif %}
+              </div>
+              <div class="form-group">
+                  {{ form.password.label(class="form-control-label") }}
+                  {% if form.password.errors %}
+                    {{ form.password(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                      {% for error in form.password.errors %}
+                        <span>{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                  {% else %}
+                    {{ form.password(class="form-control form-control-lg") }}
+                  {% endif %}
+              </div>
+              <div class="form-check mb-3">
+                {{ form.remember(class="form-check-input")}}
+                {{ form.remember.label(class="form-check-label")}}
+              </div>
+              <div class="form-group">
+                  {{ form.submit(class="btn btn-sm btn-primary btn-block") }}
+                  <small class="text-muted">
+                      <a href="{{ url_for('users.reset_request') }}">Forgot Password? </a>
+                  </small>
+              </div>
+          </fieldset>
+
+      </form>
+    <div class="border-top pt3 form-signin">
+      <small class="text-muted">
+          Need An Account? <a class="ml-2" href=" {{ url_for('users.register') }}">Sign Up Now</a>
+      </small>
+    </div>
+{% endblock content %}
